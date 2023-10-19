@@ -15,6 +15,9 @@ from pathlib import Path
 from configurations import Configuration
 from configurations import values
 
+from dotenv import load_dotenv
+
+load_dotenv()
 class Dev(Configuration):
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
     BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,7 +32,8 @@ class Dev(Configuration):
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
 
-    ALLOWED_HOSTS = values.ListValue(["localhost", "0.0.0.0", ".codio.io"])
+    ALLOWED_HOSTS = ['127.0.0.1']
+
     #X_FRAME_OPTIONS = "ALLOW-FROM " + os.environ.get("CODIO_HOSTNAME") + "-8000.codio.io"
     CSRF_COOKIE_SAMESITE = None
     #CSRF_TRUSTED_ORIGINS = [os.environ.get("CODIO_HOSTNAME") + "-8000.codio.io"]
@@ -49,7 +53,8 @@ class Dev(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
-        'movies'
+        'movies',
+        'rest_framework'
     ]
 
     MIDDLEWARE = [
@@ -82,6 +87,7 @@ class Dev(Configuration):
 
     WSGI_APPLICATION = 'course4_proj.wsgi.application'
     OMDB_KEY = "67440aa7"
+    OMDB_KEY = values.SecretValue()
 
 
     # Database
